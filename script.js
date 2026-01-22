@@ -18,7 +18,7 @@ gsap.from(".hero p", {
 gsap.from(".section", {
   scrollTrigger: {
     trigger: ".section",
-    start: "top 80%"
+    start: "top 1200%"
   },
   y: 100,
   opacity: 0,
