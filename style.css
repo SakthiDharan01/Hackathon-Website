@@ -90,8 +90,8 @@ button:hover {
 
 .track-card {
   position: relative;
-  width: 100%;
-  height: 200px;
+  width: 350px;
+  height: 300px;
   perspective: 1000px;
   cursor: pointer;
 }
@@ -116,13 +116,14 @@ button:hover {
 }
 
 .track-card .front {
-  background: linear-gradient(180deg, #75007d, rgba(255,255,255,0.05));
+  background: linear-gradient(180deg, #403e40, #0a0a0a, rgba(255,255,255,0.05));
   border: 1px solid rgba(0, 102, 255, 0.1);
   color: #fff;
 }
 
 .track-card .back {
-  background: linear-gradient(135deg, #ff4ecd, #00eaff);
+  background: linear-gradient(135deg, #8e2de2, #e0009d);
+
   color: #000;
   transform: rotateY(180deg);
 }
@@ -350,3 +351,128 @@ button:hover {
 .font1{
   font-family: 'Clash Display', sans-serif;
 }
+
+/* FAQ ACCORDION */
+.faq-accordion {
+  padding: 120px 10%;
+}
+
+.faq-title {
+  font-family: 'Array', sans-serif;
+  font-size: 4.5rem;
+  font-weight: 200;
+  margin-bottom: 50px;
+}
+
+/* CARD */
+.faq-item {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.02)
+  );
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 14px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+/* HEADER */
+.faq-header {
+  padding: 22px 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 2rem;
+  color: white;
+}
+
+.faq-header:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+/* ARROW */
+.faq-arrow {
+  color: #ff4ecd;
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+/* BODY */
+.faq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.faq-body p {
+  padding: 40px 30px 20px 20px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.6;
+  font-size: 1.5rem;
+}
+
+/* ACTIVE */
+.faq-item.active .faq-body {
+  max-height: 200px;
+}
+
+.faq-item.active .faq-header {
+  background: rgba(255,255,255,0.05);
+}
+
+.faq-item.active .faq-arrow {
+  transform: rotate(180deg);
+  background: rgba(255,255,255,0.05);
+}
+
+
+.picbelow{
+  color: white;
+  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 20px 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* SECOND BACKGROUND VIDEO (FOR REST OF PAGE) */
+.bg-video-secondary {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -3;
+  opacity: 1;
+}
+
+/* HERO keeps original video */
+.hero .bg-video {
+  display: block;
+}
+
+/* Hide secondary video ONLY on hero */
+.hero ~ .bg-video-secondary {
+  display: block;
+}
+
+/* REMOVE gradient background for rest of page */
+body {
+  background: none;
+}
+
+/* GLASS SECTION BACKGROUND (reusable) */
+.glass-section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 28px;
+  padding: 60px 80px 60px 60px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.45);
+}
+

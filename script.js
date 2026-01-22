@@ -18,19 +18,13 @@ gsap.from(".hero p", {
 gsap.from(".section", {
   scrollTrigger: {
     trigger: ".section",
-    start: "top 1200%"
+    start: "top 150%"
   },
   y: 100,
   opacity: 0,
   stagger: 0.3
 });
 
-/* FAQ toggle */
-document.querySelectorAll(".faq").forEach(faq => {
-  faq.addEventListener("click", () => {
-    faq.classList.toggle("open");
-  });
-});
 
 /* Cycling text */
 const texts = ["Think 💡", "Innovate 🚀", "Code 🧑‍💻"];
@@ -62,3 +56,39 @@ function typeWriter() {
 }
 
 typeWriter();
+
+/* FAQ toggle */
+document.querySelectorAll(".faq-header").forEach(header => {
+  header.addEventListener("click", () => {
+    const item = header.parentElement;
+
+    document.querySelectorAll(".faq-item").forEach(faq => {
+      if (faq !== item) faq.classList.remove("active");
+    });
+
+    item.classList.toggle("active");
+  });
+});
+    /* Lenis smooth scrolling initialization */
+    const lenis = new Lenis({
+      lerp: 0.1,
+      smoothWheel: true,
+      normalizeWheel: true
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Handle navbar anchor links for precise scrolling
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          lenis.scrollTo(targetElement, { offset: 0 });
+        }
+      });
+    });

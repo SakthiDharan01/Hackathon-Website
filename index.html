@@ -11,7 +11,7 @@
     <!-- GSAP -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-  
+
 </head>
 <body>
     <!-- NAVBAR -->
@@ -70,83 +70,153 @@
   <!-- HERO CONTENT -->
   <div class="hero-content">
     <img src="images/AI-WARS-LOGO.png" class="hero-logo" style="margin-right: 40px;">
+    <h3 class = "picbelow">The Ultimate Arena for AI Innovation</h3>
     <a href="#register"><button>Register Now</button></a>
   </div>
 
 </section>
 
+<!-- BACKGROUND VIDEO FOR REST OF SITE -->
+<video autoplay muted loop playsinline class="bg-video-secondary">
+  <source src="assets/bg2.mp4" type="video/mp4">
+</video>
+
+
   <!-- ABOUT -->
    <section class="section" id="about">
+    <div class="glass-section">
     <p style="font-family: 'Array', sans-serif; font-size: 4.5rem; font-weight: 200;padding: 10px 0 0 0;">ABOUT THE EVENT</p>
     <p class = "font1">AI WARS is a 24-hour hackathon on 30–31 January 2026 at Easwari Engineering College, challenging innovators to build AI-powered solutions for real-world problems.</p>
     <p class = "font1">Compete in teams of up to 3, showcase your skills, and win from a ₹10K prize pool. The event is part of the AI Impact Summit, fostering collaboration and creativity in the AI space.</p>
     <p class = "font1">Whether you're a student, developer, or AI enthusiast — this is your arena to code, create, and impact the future.</p>
     <p class = "ccc" style="font-size: 3rem;">🚀 Code. Create. Conquer.</p>
+    </div>
   </section>
 
   <!-- TIMELINE -->
   <section class="section timeline" id="tracks">
+    <div class="glass-section">
     <h2 style="font-family: 'Array', sans-serif; font-size: 4.5rem; font-weight: 200;">Proposed Tracks/Domains</h2>
     <ul>
       <li>
         <div class="track-card">
           <div class="front" style="font-family: 'Array', sans-serif;font-weight: 100;">AI in Agriculture & Food</div>
-          <div class="back">Build AI models for crop health monitoring to ensure sustainable agriculture and reduce food loss.</div>
+          <div class="back">Build AI models for crop health monitoring, precision farming, yield prediction, or smart irrigation to ensure sustainable agriculture and reduce food loss.</div>
         </div>
       </li>
       <li>
         <div class="track-card">
           <div class="front" style="font-family: 'Array', sans-serif;font-weight: 100;">AI in Cybersecurity & Digital Trust</div>
-          <div class="back">Build AI-driven tools to detect threats, ensure data privacy, and strengthen digital security frameworks.</div>
+          <div class="back">Design AI-powered systems for anomaly detection, fraud prevention, phishing defense, ad data integrity to strengthen digital ecosystems.</div>
         </div>
       </li>
       <li>
         <div class="track-card">
           <div class="front" style="font-family: 'Array', sans-serif;font-weight: 100;">AI for Space & Remote Sensing</div>
-          <div class="back">Use AI to analyze satellite data, monitor environmental changes, and advance space exploration technologies.</div>
-        </div>
-      </li>
-      <li>
-        <div class="track-card">
-          <div class="front" style="font-family: 'Array', sans-serif;font-weight: 100;">Final Evaluation</div>
-          <div class="back">Showcase your innovations in a comprehensive evaluation round to compete for prizes and recognition.</div>
+          <div class="back">Use satellite data, remote sensing, and AI vision systems for climate observation, resource mapping, and space exploration insights.</div>
         </div>
       </li>
       <li>
         <div class="track-card">
           <div class="front" style="font-family: 'Array', sans-serif;font-weight: 100;">AI in Smart Governance & Public Policy</div>
-          <div class="back">Develop AI solutions for efficient public services, policy analysis, and transparent governance.</div>
+          <div class="back">Create intelligent solutions for e-governance, citizen engagement, and automated policy evaluation through NLP and data-driven analytics.</div>
         </div>
       </li>
       <li>
         <div class="track-card">
           <div class="front" style="font-family: 'Array', sans-serif;font-weight: 100;">AI in Quality Control for Construction Equipment Manufacturing</div>
-          <div class="back">Implement AI for defect detection, predictive maintenance, and quality assurance in manufacturing.</div>
+          <div class="back">Develop AI systems for defect detection, dimensional verification, and predictive maintenance in industrial manufacturing.</div>
         </div>
       </li>
       <li>
-        <div class="track-card" style="left: 412px;">
+        <div class="track-card">
           <div class="front" style="font-family: 'Array', sans-serif;font-weight: 100;">AI for Assistive & Human-Centric Technology</div>
-          <div class="back">Create AI-powered devices and apps to assist people with disabilities and improve human experiences.</div>
+          <div class="back">Build AI systems for accessibility-speech-to-text tools, sign language recognition, emotional AI, or assistive robotics enhancing inclusion.</div>
         </div>
       </li>
     </ul>
+    </div>
   </section>
 
   <!-- FAQ -->
-  <section class="section" id="faq">
-    <h2 style="font-family: 'Array', sans-serif; font-size: 4.5rem; font-weight: 200;">FAQs</h2>
+<section id="faq" class="faq-accordion">
+  <div class="glass-section">
+  <h2 class="faq-title">FAQs</h2>
 
-    <div class="faq">
-      <h3>Who can participate?</h3>
-      <p>Any student with passion for tech.</p>
+  <div class="faq-item">
+    <div class="faq-header" style="font-family: 'Array', sans-serif;font-weight: 100;">
+      <span>Can we participate as a team?</span>
+      <span class="faq-arrow">▼</span>
     </div>
+    <div class="faq-body" style="font-family: 'Clash Display', sans-serif;">
+      <p>
+        Yes, a team can have 3-4 members.
+      </p>
+    </div>
+  </div>
 
-    <div class="faq">
-      <h3>Is it free?</h3>
-      <p>Yes, completely free.</p>
+  <div class="faq-item">
+    <div class="faq-header" style="font-family: 'Array', sans-serif;font-weight: 100;">
+      <span>Who can participate?</span>
+      <span class="faq-arrow">▼</span>
     </div>
-  </section>
+    <div class="faq-body" style="font-family: 'Clash Display', sans-serif;">
+      <p>Any student pursuing UG in Engineering is eligible to apply.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-header" style="font-family: 'Array', sans-serif;font-weight: 100;">
+      <span>Is this an online hackathon?</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-body" style="font-family: 'Clash Display', sans-serif;">
+      <p>No, only the ppt shortlisting will be done via online. The finals will be held offline.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-header" style="font-family: 'Array', sans-serif;font-weight: 100;">
+      <span>Are Inter College teams allowed?</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-body" style="font-family: 'Clash Display', sans-serif;">
+      <p>Yes, Inter College teams are allowed and encouraged.</p>
+    </div>
+  </div>
+
+    <div class="faq-item">
+    <div class="faq-header" style="font-family: 'Array', sans-serif;font-weight: 100;">
+      <span>How long is this Hackathon?</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-body" style="font-family: 'Clash Display', sans-serif;">
+      <p>AI-WARS is a 24-hour hackathon, live on January 30th, 2026.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-header" style="font-family: 'Array', sans-serif;font-weight: 100;">
+      <span>Where will be the finals conducted?</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-body" style="font-family: 'Clash Display', sans-serif;">
+      <p>The finals will be conducted offline at SRM Easwari Engineering College Chennai on January 30th, 2026.</p>
+    </div>
+  </div>
+
+
+    <div class="faq-item">
+    <div class="faq-header" style="font-family: 'Array', sans-serif;font-weight: 100;">
+      <span>Will accomadation be provided?</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-body" style="font-family: 'Clash Display', sans-serif;">
+      <p>No, accomadation will not be provided. Food and refreshments will be provided for particpants who are required to pay a minimal fee.</p>
+    </div>
+  </div>
+  </div>
+</section>
 
   <!-- CTA -->
   <section class="cta" id="register">
@@ -155,6 +225,5 @@
   </section>
 
   <script src="script.js"></script>
-  </script>
 </body>
 </html>
