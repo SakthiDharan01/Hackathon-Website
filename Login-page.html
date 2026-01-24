@@ -1,380 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login - Foodie Palace</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">   
-    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500&display=swap" rel="stylesheet">
-    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400&display=swap" rel="stylesheet"> 
-    <style>
-        /* Additional styles for login page */
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-	.login-container {
-            max-width: 600px;
-            width: 100%;
-            background: linear-gradient(135deg, #90909092 100%);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-        
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .login-header h2 {
-            color: white;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        
-        .login-header p {
-            color: white;
-            font-size: 16px;
-        }
-        
-        .input-group {
-            margin-bottom: 20px;
-        }
-        
-        .input-group label {
-            display: block;
-            color: white;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .input-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            font-size: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            transition: border-color 0.3s;
-        }
-        
-        .input-group input:focus {
-            outline: none;
-            border-color: #ffffff;
-        }
-        
-        .remember-me {
-            margin: 15px 0;
-            display: flex;
-            align-items: center;
-        }
-        
-        .remember-me label {
-            display: flex;
-            align-items: center;
-            color: white;
-            cursor: pointer;
-        }
-        
-        .remember-me input {
-            margin-right: 8px;
-        }
-        
-        .submit-btn {
-            width: 100%;
-            
-            color: rgb(0, 0, 0);
-            border: none;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(135deg, #935ce0 100%, #18083f 100%);
-            color: white;
-        }
-        
-        .divider {
-            text-align: center;
-            margin: 25px 0;
-            position: relative;
-        }
-        
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .divider span {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0 15px;
-            color: white;
-            font-size: 14px;
-        }
-        
-        .google-btn {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s;
-        }
-        
-        .google-btn:hover {
-            background: white;
-            color: black;
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .google-btn i {
-            color: unset;
-            font-size: 18px;
-        }
+  <title>Login - AI Wars Hackathon</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-        .google-btn:hover i {
-            color: #935ce0;
-        }
-        
-        .signup-link {
-            text-align: center;
-            margin-top: 25px;
-            color: white;
-        }
-        
-        .signup-link a {
-            color: #935ce0;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .signup-link a:hover {
-            text-decoration: underline;
-        }
-        
-        .debug-panel {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(255,255,255,0.95);
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #667eea;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            z-index: 1000;
-            max-width: 300px;
-        }
-        
-        .debug-panel h4 {
-            margin: 0 0 10px 0;
-            color: #333;
-            font-size: 14px;
-        }
-        
-        .debug-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            font-size: 12px;
-        }
-        
-        .debug-btn:hover {
-            background: #5a6fd8;
-        }
-    </style>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">   
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400&display=swap" rel="stylesheet"> 
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      max-width: 600px;
+      width: 100%;
+      background: linear-gradient(135deg, #90909092 100%);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-header h2 {
+      color: white;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .login-header p {
+      color: white;
+      font-size: 16px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      color: white;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .remember-me {
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .remember-me label {
+      display: flex;
+      align-items: center;
+      color: white;
+      cursor: pointer;
+    }
+
+    .remember-me input {
+      margin-right: 8px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      color: rgb(0, 0, 0);
+      border: none;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 25px 0;
+      position: relative;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .divider span {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0 15px;
+      color: white;
+      font-size: 14px;
+    }
+
+    .google-btn {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 25px;
+      color: white;
+    }
+
+    .signup-link a {
+      color: #935ce0;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="login-container">
-        <div class="login-header">
-            <h2 style="font-size: 2.5rem; background: linear-gradient(to bottom, #ffffff 50%, #a0a19f 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Welcome Back!</h2>
-            <p style="font-size: 1.5rem;font-family: 'Clash Display', sans-serif;">Register here for AI-Wars Hackathon</p>
-        </div>
-        
-        <form id="loginForm">
-            <div class="input-group">
-                <label>Username or Email</label>
-                <input type="text" name="username" required>
-            </div>
-            
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" name="password" required>
-            </div>
-            
-            <div class="remember-me">
-                <label>
-                    <input type="checkbox"> Remember me?
-                </label>
-            </div>
-            
-            <button type="submit" class="submit-btn">
-                Sign In
-            </button>
-            
-            <div class="divider">
-                <span>Or continue with</span>
-            </div>
-            
-            <div class="input-group">
-                <button id="google-login-btn" type="button" class="google-btn">
-                    <i class="fab fa-google"></i> Login with Google
-                </button>
-            </div>
-            
-            <div class="signup-link">
-                <p>Don't have an account? <a href="#">Sign up</a></p>
-            </div>
-        </form>
 
-          <!-- BACKGROUND VIDEO -->
-  <video autoplay muted loop playsinline class="bg-video">
-    <source src="assets/bg.mp4" type="video/mp4">
-  </video>
-
+  <div class="login-container">
+    <div class="login-header">
+      <h2 style="font-size: 2.5rem; background: linear-gradient(to bottom, #ffffff 50%, #a0a19f 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        Welcome Back!
+      </h2>
+      <p style="font-size: 1.5rem;font-family: 'Clash Display', sans-serif;">
+        Register here for AI-Wars Hackathon
+      </p>
     </div>
-    <!-- Scripts -->
-    <!-- 1. EmailJS (for booking emails) -->
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <script>
-        // Initialize EmailJS
-        (function() {
-            emailjs.init("1-apsNAlFgK7FP7Nl");
-            console.log("📧 EmailJS initialized");
-        })();
-    </script>
-    
-    <!-- 2. Firebase Authentication -->
-    <script type="module" src="auth.js"></script>
-    
-    <!-- 3. Page-specific JavaScript -->
-    <script>
-        // Debug functions
-        function debugLog(message) {
-            const output = document.getElementById('debug-output');
-            const time = new Date().toLocaleTimeString();
-            output.innerHTML += `<div>[${time}] ${message}</div>`;
-            output.scrollTop = output.scrollHeight;
-            console.log(message);
-        }
-        
-        function checkStorage() {
-            debugLog("=== CHECKING LOCALSTORAGE ===");
-            const email = localStorage.getItem("userEmail");
-            const username = localStorage.getItem("username");
-            
-            debugLog(`userEmail: ${email || "EMPTY"}`);
-            debugLog(`username: ${username || "EMPTY"}`);
-            
-            if (localStorage.length === 0) {
-                debugLog("⚠️ localStorage is empty!");
-            } else {
-                debugLog(`Total items: ${localStorage.length}`);
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    debugLog(`${key}: ${localStorage.getItem(key)}`);
-                }
-            }
-            
-            alert(
-                "LocalStorage Status:\n\n" +
-                "Email: " + (email || "EMPTY") + "\n" +
-                "Username: " + (username || "EMPTY") + "\n" +
-                "Total items: " + localStorage.length
-            );
-        }
-        
-        function clearStorage() {
-            if (confirm("Clear ALL localStorage?")) {
-                localStorage.clear();
-                debugLog("✅ localStorage cleared");
-                alert("Storage cleared! Page will reload...");
-                location.reload();
-            }
-        }
-        
-        function testLogin() {
-            const testEmail = prompt("Enter test email for manual login:", "test@example.com");
-            if (testEmail) {
-                localStorage.setItem("userEmail", testEmail);
-                localStorage.setItem("username", "Test User");
-                localStorage.setItem("testLogin", "true");
-                
-                debugLog(`✅ Manual login set: ${testEmail}`);
-                alert(`Test login set!\nEmail: ${testEmail}\nRedirecting to home...`);
-                
-                setTimeout(() => {
-                    window.location.href = "index.html";
-                }, 1000);
-            }
-        }
-        
-        // Page initialization
-        document.addEventListener('DOMContentLoaded', function() {
-            debugLog("Login page loaded");
-            
-            // Handle form submission
-            const loginForm = document.getElementById("loginForm");
-            if (loginForm) {
-                loginForm.addEventListener("submit", function(e) {
-                    e.preventDefault();
-                    debugLog("Form submitted (blocked)");
-                    alert("Please use the 'Login with Google' button for now.");
-                });
-            }
-            
-            // Check for existing login
-            const existingEmail = localStorage.getItem("userEmail");
-            if (existingEmail) {
-                debugLog(`Already logged in as: ${existingEmail}`);
-                if (confirm(`You're already logged in as ${existingEmail}\nGo to homepage?`)) {
-                    window.location.href = "index.html";
-                }
-            }
-            
-            // Log localStorage on page load
-            checkStorage();
-        });
-    </script>
-    <!-- At the end of body -->
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <script>
-        emailjs.init("1-apsNAlFgK7FP7Nl");
-    </script>
-    <script type="module" src="auth.js"></script>
-    <script>
-        // Simple form handler
-        document.getElementById("loginForm")?.addEventListener("submit", function(e) {
-            e.preventDefault();
-            alert("Please use Google Login");
+
+    <form id="loginForm">
+      <div class="input-group">
+        <label>Username or Email</label>
+        <input type="text" name="username" required>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" name="password" required>
+      </div>
+
+      <div class="remember-me">
+        <label>
+          <input type="checkbox"> Remember me?
+        </label>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        Sign In
+      </button>
+
+      <div class="divider">
+        <span>Or continue with</span>
+      </div>
+
+      <!-- ✅ GOOGLE LOGIN BUTTON -->
+      <div class="input-group">
+        <button id="google-login-btn" type="button" class="google-btn">
+          <i class="fab fa-google"></i> Login with Google
+        </button>
+      </div>
+
+      <div class="signup-link">
+        <p>Don't have an account? <a href="#">Sign up</a></p>
+      </div>
+    </form>
+
+    <!-- BACKGROUND VIDEO -->
+    <video autoplay muted loop playsinline class="bg-video">
+      <source src="assets/bg.mp4" type="video/mp4">
+    </video>
+
+  </div>
+
+  <!-- ✅ GOOGLE LOGIN SCRIPT (THE FIX) -->
+  <script>
+    document.getElementById("google-login-btn").addEventListener("click", function () {
+      console.log("🔐 Redirecting to backend Google OAuth...");
+      window.location.href = "http://localhost:8080/auth/login";
     });
-</script>
+  </script>
+
+  <!-- Optional: block normal form login -->
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Please use the 'Login with Google' button.");
+    });
+  </script>
+
 </body>
 </html>
