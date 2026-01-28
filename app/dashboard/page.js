@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import './dashboard.css';
 
@@ -15,7 +15,7 @@ const agendaItems = [
   { title: 'Final Evaluation', detail: 'Next Day, 08:30 AM' },
 ];
 
-export default function DashboardPage() {
+function DashboardContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [authToken, setAuthToken] = useState(null);
@@ -328,5 +328,13 @@ export default function DashboardPage() {
         </main>
       </div>
     </main>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={null}>
+      <DashboardContent />
+    </Suspense>
   );
 }

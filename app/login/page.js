@@ -1,10 +1,10 @@
 "use client";
 import Link from 'next/link';
-import { useCallback, useEffect } from 'react';
+import { Suspense, useCallback, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import './login.css';
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
@@ -90,5 +90,13 @@ export default function LoginPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginContent />
+    </Suspense>
   );
 }
