@@ -7,7 +7,7 @@ import './login.css';
 function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
+  const API_BASE = '/backend';
 
   useEffect(() => {
     // If a token arrives (e.g., after OAuth), stash it and move to dashboard

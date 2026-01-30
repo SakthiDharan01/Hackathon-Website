@@ -13,10 +13,23 @@ html, body {
 
 body {
   font-family: 'Clash Display', sans-serif;
-  background: transparent;
+  background: #070a10;
   overflow-x: hidden;
   overflow-y: auto;
   color: white;
+}
+
+/* Darken the video backdrop for better contrast/readability */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -9;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(255, 78, 205, 0.16), transparent 60%),
+    radial-gradient(900px 520px at 80% 20%, rgba(0, 234, 255, 0.12), transparent 55%),
+    rgba(0, 0, 0, 0.45);
 }
 
 .bg-video {
@@ -25,7 +38,8 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.9) contrast(1.05);
+  object-position: center center;
+  filter: brightness(0.65) contrast(1.08) saturate(1.05);
   z-index: -10;
   pointer-events: none;
 }
@@ -45,11 +59,12 @@ body {
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-radius: 26px;
-  box-shadow: 0 0 40px rgba(0,0,0,0.45), inset 0 0 1px rgba(255,255,255,0.25);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 0 40px rgba(0,0,0,0.55), inset 0 0 1px rgba(255,255,255,0.18);
 }
 
 .profile-panel {
@@ -113,7 +128,7 @@ body {
 .qr-section,
 .agenda-section,
 .chat-section {
-  background: rgba(255, 255, 255, 0.08) !important;
+  background: rgba(0, 0, 0, 0.42) !important;
   backdrop-filter: blur(18px) !important;
   -webkit-backdrop-filter: blur(18px) !important;
   box-shadow: 0 0 40px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.25) !important;
