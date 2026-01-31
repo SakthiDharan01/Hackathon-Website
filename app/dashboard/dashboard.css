@@ -127,6 +127,7 @@ body::before {
 .timer-section,
 .qr-section,
 .agenda-section,
+.submission-section,
 .chat-section {
   background: rgba(0, 0, 0, 0.42) !important;
   backdrop-filter: blur(18px) !important;
@@ -216,6 +217,144 @@ body::before {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+}
+
+.submission-section {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.submission-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.submission-header h3 {
+  font-family: 'Array', sans-serif;
+  font-size: 2rem;
+  font-weight: 200;
+}
+
+.submission-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.submission-badge.open {
+  background: rgba(0, 234, 255, 0.12);
+  color: #8cf6ff;
+}
+
+.submission-badge.submitted {
+  background: rgba(0, 255, 153, 0.12);
+  color: #7bffb4;
+}
+
+.submission-badge.not_open {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+}
+
+.submission-helper {
+  opacity: 0.8;
+}
+
+.submission-disabled {
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.35);
+  border: 1px dashed rgba(255,255,255,0.2);
+}
+
+.submission-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.submission-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.submission-grid .full {
+  grid-column: span 2;
+}
+
+.submission-form input,
+.submission-form textarea {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.4);
+  color: white;
+  outline: none;
+}
+
+.submission-form input[readonly] {
+  opacity: 0.75;
+}
+
+.submission-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.submission-submit {
+  padding: 12px 22px;
+  border-radius: 22px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff4ecd, #00eaff);
+  color: white;
+  font-weight: 600;
+}
+
+.submission-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.submission-hint {
+  opacity: 0.75;
+  font-size: 0.9rem;
+}
+
+.submission-error {
+  color: #ffb4b4;
+  margin-top: 10px;
+}
+
+.submission-success {
+  color: #9affcf;
+  margin-top: 10px;
+}
+
+.submission-summary {
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.submission-meta {
+  margin-top: 12px;
+  display: grid;
+  gap: 6px;
+  font-size: 0.95rem;
 }
 
 .agenda-title {
@@ -574,6 +713,22 @@ body::before {
   .agenda-list {
     max-height: 360px;
     overflow-y: auto;
+  }
+
+  .submission-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .submission-grid .full {
+    grid-column: span 1;
+  }
+
+  .submission-actions {
+    position: sticky;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px 0 6px;
+    border-radius: 12px;
   }
 
   .chat-section {

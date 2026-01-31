@@ -25,6 +25,23 @@ function DashboardContent() {
   const [chatInput, setChatInput] = useState('');
   const [chatError, setChatError] = useState('');
 
+  const [submissionStatus, setSubmissionStatus] = useState({ status: 'not_open', submission: null });
+  const [submissionForm, setSubmissionForm] = useState({
+    project_title: '',
+    problem_statement: '',
+    project_description: '',
+    tech_stack: '',
+    github_repo: '',
+    live_demo: '',
+    team_contributions: '',
+    challenges: '',
+    hackathon_experience: '',
+    feedback: '',
+  });
+  const [submissionError, setSubmissionError] = useState('');
+  const [submissionSubmitting, setSubmissionSubmitting] = useState(false);
+  const [submissionMessage, setSubmissionMessage] = useState('');
+
   const [remainingSeconds, setRemainingSeconds] = useState(null);
   const [readyLoading, setReadyLoading] = useState(false);
 
@@ -160,6 +177,75 @@ function DashboardContent() {
     const API_BASE = '/backend';
     let cancelled = false;
 
+    const fetchSubmissionStatus = async () => {
+      try {
+        setSubmissionError('');
+        const res = await fetch(`${API_BASE}/api/submissions/status`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch submission status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        if (cancelled) return;
+        setSubmissionStatus(data || { status: 'not_open' });
+      } catch (err) {
+        console.error(err);
+        if (!cancelled) {
+          setSubmissionError('Unable to load submission status right now.');
+        }
+      }
+    };
+
+    fetchSubmissionStatus();
+    const intervalId = setInterval(fetchSubmissionStatus, 18000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(intervalId);
+    };
+  }, [authToken]);
+
+  useEffect(() => {
+    if (!team?.teamId) return;
+    if (submissionStatus.status !== 'open') return;
+    const key = `submissionDraft:${team.teamId}`;
+    const saved = localStorage.getItem(key);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setSubmissionForm((prev) => ({ ...prev, ...parsed }));
+      } catch (err) {
+        // ignore draft parse errors
+      }
+    }
+  }, [team?.teamId, submissionStatus.status]);
+
+  useEffect(() => {
+    if (!team?.teamId) return;
+    if (submissionStatus.status !== 'open') return;
+    const key = `submissionDraft:${team.teamId}`;
+    localStorage.setItem(key, JSON.stringify(submissionForm));
+  }, [submissionForm, submissionStatus.status, team?.teamId]);
+
+  useEffect(() => {
+    if (!team?.problemStatement) return;
+    setSubmissionForm((prev) => ({
+      ...prev,
+      problem_statement: team.problemStatement,
+    }));
+  }, [team?.problemStatement]);
+
+  useEffect(() => {
+    if (!authToken) return;
+
+    const API_BASE = '/backend';
+    let cancelled = false;
+
     const fetchChat = async () => {
       try {
         setChatError('');
@@ -226,6 +312,107 @@ function DashboardContent() {
       setChatError('Failed to send message. Try again.');
       // restore message so user doesn't lose it
       setChatInput(text);
+    }
+  };
+
+  const isValidUrl = (value) => {
+    if (!value) return false;
+    try {
+      const url = new URL(value);
+      return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch (err) {
+      return false;
+    }
+  };
+
+  const submissionValidation = useMemo(() => {
+    if (submissionStatus.status !== 'open') {
+      return { valid: false, errors: [] };
+    }
+
+    const errors = [];
+    const requiredFields = {
+      project_title: 'Project Title',
+      problem_statement: 'Problem Statement',
+      project_description: 'Project Description',
+      tech_stack: 'Tech Stack Used',
+      github_repo: 'GitHub Repository Link',
+      team_contributions: 'Team Contributions',
+      challenges: 'Challenges Faced',
+      hackathon_experience: 'Hackathon Experience',
+      feedback: 'Feedback',
+    };
+
+    Object.entries(requiredFields).forEach(([key, label]) => {
+      if (!submissionForm[key] || !submissionForm[key].trim()) {
+        errors.push(`${label} is required.`);
+      }
+    });
+
+    if (submissionForm.github_repo && !isValidUrl(submissionForm.github_repo)) {
+      errors.push('GitHub Repository Link must be a valid URL.');
+    }
+
+    if (submissionForm.live_demo && submissionForm.live_demo.trim() && !isValidUrl(submissionForm.live_demo)) {
+      errors.push('Live Demo Link must be a valid URL.');
+    }
+
+    return { valid: errors.length === 0, errors };
+  }, [submissionForm, submissionStatus.status]);
+
+  const submitProject = async () => {
+    if (submissionStatus.status !== 'open') return;
+    if (!submissionValidation.valid) {
+      setSubmissionError(submissionValidation.errors[0] || 'Please check required fields.');
+      return;
+    }
+
+    try {
+      setSubmissionSubmitting(true);
+      setSubmissionError('');
+      setSubmissionMessage('');
+
+      const API_BASE = '/backend';
+      const payload = {
+        ...submissionForm,
+        team_id: team?.teamId,
+        submission_timestamp: new Date().toISOString(),
+      };
+
+      const res = await fetch(`${API_BASE}/api/team/submission`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || `Failed to submit: ${res.status}`);
+      }
+
+      setSubmissionMessage('Your project has been submitted successfully.');
+
+      // Refresh status
+      const statusRes = await fetch(`${API_BASE}/api/submissions/status`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      if (statusRes.ok) {
+        const data = await statusRes.json();
+        setSubmissionStatus(data || { status: 'submitted' });
+      }
+
+      if (team?.teamId) {
+        const key = `submissionDraft:${team.teamId}`;
+        localStorage.removeItem(key);
+      }
+    } catch (err) {
+      console.error(err);
+      setSubmissionError(err.message || 'Failed to submit. Please try again.');
+    } finally {
+      setSubmissionSubmitting(false);
     }
   };
 
@@ -358,6 +545,8 @@ function DashboardContent() {
     if (Array.isArray(items) && items.length) return items;
     return null;
   }, [agenda]);
+
+  const submissionSummary = submissionStatus?.submission || null;
 
   return (
     <main>
@@ -569,6 +758,158 @@ function DashboardContent() {
               </div>
               {agendaError ? <p style={{ marginTop: 12, opacity: 0.8 }}>{agendaError}</p> : null}
             </div>
+          </section>
+
+          <section className="glass submission-section">
+            <div className="submission-header">
+              <h3>Project Submission</h3>
+              <span className={`submission-badge ${submissionStatus.status}`}>
+                {submissionStatus.status === 'open'
+                  ? 'Submission Open'
+                  : submissionStatus.status === 'submitted'
+                    ? 'Project Submitted'
+                    : 'Submission Not Open'}
+              </span>
+            </div>
+
+            {submissionStatus.status === 'not_open' ? (
+              <div className="submission-disabled">
+                <p>Project submission is not open yet. This will update automatically.</p>
+              </div>
+            ) : null}
+
+            {submissionStatus.status === 'open' ? (
+              <>
+                <p className="submission-helper">Please submit your final project details before the deadline.</p>
+                <div className="submission-form">
+                  <div className="submission-grid">
+                    <label>
+                      Project Title*
+                      <input
+                        type="text"
+                        value={submissionForm.project_title}
+                        onChange={(e) => setSubmissionForm((p) => ({ ...p, project_title: e.target.value }))}
+                      />
+                    </label>
+                    <label>
+                      Problem Statement*
+                      <input
+                        type="text"
+                        value={submissionForm.problem_statement}
+                        readOnly
+                      />
+                    </label>
+                    <label className="full">
+                      Project Description*
+                      <textarea
+                        rows={3}
+                        value={submissionForm.project_description}
+                        onChange={(e) => setSubmissionForm((p) => ({ ...p, project_description: e.target.value }))}
+                      />
+                    </label>
+                    <label className="full">
+                      Tech Stack Used*
+                      <textarea
+                        rows={2}
+                        value={submissionForm.tech_stack}
+                        onChange={(e) => setSubmissionForm((p) => ({ ...p, tech_stack: e.target.value }))}
+                      />
+                    </label>
+                    <label className="full">
+                      GitHub Repository Link*
+                      <input
+                        type="url"
+                        value={submissionForm.github_repo}
+                        onChange={(e) => setSubmissionForm((p) => ({ ...p, github_repo: e.target.value }))}
+                      />
+                    </label>
+                    <label className="full">
+                      Live Demo Link (optional)
+                      <input
+                        type="url"
+                        value={submissionForm.live_demo}
+                        onChange={(e) => setSubmissionForm((p) => ({ ...p, live_demo: e.target.value }))}
+                      />
+                    </label>
+                    <label className="full">
+                      Team Contributions*
+                      <textarea
+                        rows={3}
+                        value={submissionForm.team_contributions}
+                        onChange={(e) => setSubmissionForm((p) => ({ ...p, team_contributions: e.target.value }))}
+                      />
+                    </label>
+                    <label className="full">
+                      Challenges Faced*
+                      <textarea
+                        rows={3}
+                        value={submissionForm.challenges}
+                        onChange={(e) => setSubmissionForm((p) => ({ ...p, challenges: e.target.value }))}
+                      />
+                    </label>
+                    <label className="full">
+                      Hackathon Experience*
+                      <textarea
+                        rows={2}
+                        value={submissionForm.hackathon_experience}
+                        onChange={(e) => setSubmissionForm((p) => ({ ...p, hackathon_experience: e.target.value }))}
+                      />
+                    </label>
+                    <label className="full">
+                      Feedback*
+                      <textarea
+                        rows={2}
+                        value={submissionForm.feedback}
+                        onChange={(e) => setSubmissionForm((p) => ({ ...p, feedback: e.target.value }))}
+                      />
+                    </label>
+                  </div>
+
+                  {submissionError ? <p className="submission-error">{submissionError}</p> : null}
+                  {submissionMessage ? <p className="submission-success">{submissionMessage}</p> : null}
+
+                  <div className="submission-actions">
+                    <button
+                      className="submission-submit"
+                      onClick={submitProject}
+                      disabled={!submissionValidation.valid || submissionSubmitting}
+                    >
+                      {submissionSubmitting ? 'Submitting…' : 'Submit Project'}
+                    </button>
+                    {!submissionValidation.valid && submissionValidation.errors.length > 0 ? (
+                      <small className="submission-hint">{submissionValidation.errors[0]}</small>
+                    ) : null}
+                  </div>
+                </div>
+              </>
+            ) : null}
+
+            {submissionStatus.status === 'submitted' ? (
+              <div className="submission-summary">
+                <p>Your project has been submitted successfully.</p>
+                <div className="submission-meta">
+                  <div>
+                    <strong>Project Title:</strong> {submissionSummary?.project_title || '—'}
+                  </div>
+                  <div>
+                    <strong>GitHub:</strong>{' '}
+                    {submissionSummary?.github_repo ? (
+                      <a href={submissionSummary.github_repo} target="_blank">Open</a>
+                    ) : '—'}
+                  </div>
+                  <div>
+                    <strong>Live Demo:</strong>{' '}
+                    {submissionSummary?.live_demo ? (
+                      <a href={submissionSummary.live_demo} target="_blank">Open</a>
+                    ) : '—'}
+                  </div>
+                  <div>
+                    <strong>Submitted At:</strong>{' '}
+                    {submissionStatus.submitted_at ? new Date(submissionStatus.submitted_at).toLocaleString() : '—'}
+                  </div>
+                </div>
+              </div>
+            ) : null}
           </section>
 
           <section className="glass chat-section">
